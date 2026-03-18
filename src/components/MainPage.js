@@ -1,19 +1,48 @@
 import React, { useState, useRef } from 'react';
 import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
-import Gallery from './Gallery';
 import ProgramCard from './ProgramCard';
 
 const MainPage = () => {
-  const [activeTab, setActiveTab] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const homeRef = useRef(null);
   const servicesRef = useRef(null);
   const aboutRef = useRef(null);
   const contactRef = useRef(null);
   const missionRef = useRef(null);
-  const galleryRef = useRef(null);
   const programsRef = useRef(null);
+
+  const [activeTab, setActiveTab] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentFirstIndex, setCurrentFirstIndex] = useState(0);
+  const [currentSecondIndex, setCurrentSecondIndex] = useState(0);
+
+  const firstHomeImages = [
+    '/firsthome/h1.jpg',
+    '/firsthome/h2.jpg',
+    '/firsthome/h3.jpg',
+    '/firsthome/IMG_0950 (1).jpg',
+    '/firsthome/IMG_0951 (1).jpg',
+    '/firsthome/IMG_0953 (1).jpg',
+    '/firsthome/IMG_0954 (1).jpg',
+    '/firsthome/IMG_7689-min.jpg',
+    '/firsthome/IMG_7697-min.jpg',
+    '/firsthome/IMG_7701-min.jpg'
+  ];
+
+  const secondHomeImages = [
+    '/secondhome/imgi_97_genMid.2_3.jpg',
+    '/secondhome/imgi_98_3_3.jpg',
+    '/secondhome/imgi_99_genMid.4_3.jpg',
+    '/secondhome/imgi_100_genMid.5_3.jpg',
+    '/secondhome/imgi_101_6_3.jpg',
+    '/secondhome/imgi_102_genMid.7_3.jpg',
+    '/secondhome/imgi_104_9_3.jpg',
+    '/secondhome/imgi_105_genMid.10_3.jpg',
+    '/secondhome/imgi_110_15_3.jpg',
+    '/secondhome/imgi_112_genMid.17_3.jpg',
+    '/secondhome/imgi_113_18_3.jpg',
+    '/secondhome/imgi_114_genMid.19_3.jpg'
+  ];
 
   const scrollToSection = (ref, tabName) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -234,7 +263,7 @@ const MainPage = () => {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
               <span className="text-2xl font-light tracking-wider text-slate-900">
-                <span className="text-sky-500">LIVE</span> LIFE CARE
+                <span className="text-sky-500">LIVE</span> LIFE
               </span>
             </div>
             
@@ -312,14 +341,6 @@ const MainPage = () => {
                 Our Mission
               </button>
               <button 
-                onClick={() => scrollToSection(galleryRef, 'gallery')}
-                className={`text-sm font-light tracking-wider transition-colors duration-300 ${
-                  activeTab === 'gallery' ? 'text-sky-500' : 'text-slate-600 hover:text-sky-500'
-                }`}
-              >
-                Gallery
-              </button>
-              <button 
                 onClick={() => scrollToSection(programsRef, 'programs')}
                 className={`text-sm font-light tracking-wider transition-colors duration-300 ${
                   activeTab === 'programs' ? 'text-sky-500' : 'text-slate-600 hover:text-sky-500'
@@ -381,15 +402,6 @@ const MainPage = () => {
                 </button>
                 <button
                   onClick={() => {
-                    scrollToSection(galleryRef, 'gallery');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
-                >
-                  Gallery
-                </button>
-                <button
-                  onClick={() => {
                     scrollToSection(programsRef, 'programs');
                     setIsMenuOpen(false);
                   }}
@@ -405,132 +417,153 @@ const MainPage = () => {
 
       <div className="pt-20">
         {/* Hero Section */}
-        <section ref={homeRef} className="relative w-full h-screen flex items-center justify-center bg-gradient-to-b from-white via-sky-50 to-white">
-          <div className="container mx-auto text-center px-4 max-w-4xl">
-            <h1 className="text-7xl font-light mb-6 tracking-tight">
-              <span className="text-sky-500">Live Life</span>
-              <span className="text-slate-800"> Care Home</span>
-            </h1>
-            <p className="text-xl mb-12 text-slate-600 max-w-2xl mx-auto font-light tracking-wide">
-              Compassionate Care, Building Independence
+        <section ref={homeRef} className="relative w-full min-h-screen pt-32 pb-24 flex items-center justify-center bg-gradient-to-br from-white via-white to-sky-50">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100 rounded-full opacity-20 blur-3xl"></div>
+            <div className="absolute -bottom-20 left-0 w-96 h-96 bg-sky-50 rounded-full opacity-30 blur-3xl"></div>
+            <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-sky-100 rounded-full opacity-15 blur-3xl"></div>
+          </div>
+          <div className="container mx-auto text-center px-4 max-w-7xl relative z-10">
+            <div className="mb-12">
+              <p className="text-sky-500 font-semibold text-2xl md:text-3xl tracking-light mb-4">Welcome to</p>
+              <h2 className="text-6xl md:text-7xl lg:text-8xl font-light text-slate-900 mb-6 leading-tight">
+                Live Life Adult Care Home
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-sky-500 to-sky-300 mx-auto"></div>
+            </div>
+            <p className="text-xl md:text-3xl text-slate-600 mb-16 font-light max-w-4xl mx-auto leading-relaxed">
+              Personalized residential support and expert care for adults with intellectual and developmental disabilities.
             </p>
-            <div className="flex justify-center space-x-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-8">
               <button 
                 onClick={() => scrollToSection(contactRef, 'contact')} 
-                className="bg-sky-500 text-white px-12 py-3 text-sm tracking-wider font-light transition-all duration-300 hover:bg-sky-600 shadow-lg shadow-sky-200"
+                className="bg-sky-500 text-white px-10 py-6 text-xl font-semibold rounded-2xl transition-all duration-300 hover:bg-sky-600 shadow-lg hover:shadow-2xl hover:scale-110 transform"
               >
-                CONTACT US
+                Get in Touch
               </button>
               <button 
                 onClick={() => scrollToSection(servicesRef, 'services')} 
-                className="bg-white text-slate-800 px-12 py-3 text-sm tracking-wider font-light transition-all duration-300 hover:bg-sky-50 border border-slate-200 shadow-lg"
+                className="bg-slate-100 text-slate-900 px-10 py-6 text-xl font-semibold rounded-2xl transition-all duration-300 hover:bg-slate-200 border-2 border-slate-200 hover:shadow-lg transform hover:scale-105"
               >
-                LEARN MORE
+                Explore Services
               </button>
             </div>
           </div>
         </section>
 
         {/* Services Section */}
-        <section ref={servicesRef} className="py-32 bg-slate-50">
+        <section ref={servicesRef} className="py-24 bg-slate-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-4xl font-light text-center mb-16 tracking-wide">
-              <span className="text-sky-500">Our</span> Services
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="max-w-3xl mx-auto text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-light mb-6 text-slate-900">
+                Comprehensive Care Services
+              </h2>
+              <p className="text-lg text-slate-600 font-light">
+                We provide personalized support tailored to each resident's unique needs and goals.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {services.map((service, index) => (
-                <ServiceCard 
-                  key={index}
-                  title={service.title}
-                  description={service.description}
-                  image={service.image}
-                />
+                <div key={index} className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                  <div className="relative h-72 overflow-hidden bg-slate-200 flex-shrink-0">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-8 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-semibold text-slate-900 mb-4">{service.title}</h3>
+                    <p className="text-slate-600 text-lg leading-relaxed">{service.description}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* About Us Section */}
-        <section ref={aboutRef} className="py-32 bg-sky-50">
+        <section ref={aboutRef} className="py-24 bg-gradient-to-b from-white to-slate-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-4xl font-light text-center mb-16 tracking-wide">About Us</h2>
-            <div className="max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-12 mb-16">
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-5xl md:text-6xl font-light mb-6 text-slate-900">About Live Life Adult Care Home</h2>
+              <p className="text-lg text-slate-600 font-light">
+                Founded on compassion, built on excellence. Transforming lives through personalized care.
+              </p>
+            </div>
+            
+            <div className="max-w-5xl mx-auto mb-20">
+              <div className="grid md:grid-cols-2 gap-12">
                 <div>
-                  <h3 className="text-2xl font-light mb-6 text-sky-500">Our Story</h3>
-                  <p className="text-slate-600 text-lg mb-6 leading-relaxed">
-                    Live Life Residential Care was founded with a vision to transform the lives of individuals with intellectual and developmental disabilities through personalized care and unwavering support.
+                  <h3 className="text-2xl font-light mb-6 text-slate-900">Our Mission</h3>
+                  <p className="text-slate-600 text-lg mb-6 leading-relaxed font-light">
+                    Live Life Adult Care Home was founded with a vision to transform the lives of individuals with intellectual and developmental disabilities through personalized care and unwavering support.
                   </p>
-                  <p className="text-slate-600 text-lg mb-6 leading-relaxed">
-                    Our team works closely with behavior specialists, service coordinators, primary care physicians, and trained Direct Support Professionals (DSPs) to create an environment that fosters growth, stability, and well-being. Whether assisting with daily activities, providing behavioral support, or managing medical needs, we ensure that every aspect of care is handled with compassion and expertise.
+                  <p className="text-slate-600 text-lg mb-6 leading-relaxed font-light">
+                    Our dedicated team works closely with behavior specialists, service coordinators, physicians, and trained Direct Support Professionals to create an environment that fosters growth, stability, and well-being.
                   </p>
-                  <p className="text-slate-600 text-lg mb-6 leading-relaxed">
-                    At Live Life Care Home, we believe in treating residents with dignity and respect, allowing them to thrive in a comfortable, home-like setting.
-                  </p>
-                  <p className="text-slate-600 text-lg leading-relaxed">
-                    We take pride in our comprehensive approach to care, focusing on each resident's unique needs, preferences, and goals. Our team of dedicated professionals works collaboratively to ensure the highest standards of care and support.
+                  <p className="text-slate-600 text-lg leading-relaxed font-light">
+                    We believe in treating residents with dignity and respect, allowing them to thrive in a comfortable, home-like setting where they can reach their full potential.
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-light mb-6 text-sky-500">Our Commitment</h3>
-                  <ul className="space-y-4 text-slate-600">
+                  <h3 className="text-2xl font-light mb-6 text-slate-900">Our Values</h3>
+                  <ul className="space-y-4">
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Person-centered care approach focused on individual needs</span>
+                      <span className="text-slate-600 font-light">Person-centered, individualized care</span>
                     </li>
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>24/7 professional support and care</span>
+                      <span className="text-slate-600 font-light">24/7 professional support & supervision</span>
                     </li>
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Safe and nurturing home-like environment</span>
+                      <span className="text-slate-600 font-light">Safe, nurturing home-like environment</span>
                     </li>
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
-                      <span>Comprehensive care and support services</span>
+                      <span className="text-slate-600 font-light">Comprehensive, specialized care services</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-slate-600 font-light">Respect, dignity, and empowerment</span>
                     </li>
                   </ul>
                 </div>
               </div>
+            </div>
 
-              {/* Executive Director Box */}
-              <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-                <div className="md:grid md:grid-cols-3">
-                  <div className="md:col-span-1 bg-sky-500 p-8 text-white min-h-full flex items-center justify-center">
-                    <div className="text-center flex flex-col items-center justify-center">
-                      <h3 className="text-2xl font-semibold mb-2">Yohannes Demssie</h3>
-                      <p className="text-sky-100 text-lg mb-4">Executive Director</p>
-                      <button 
-                        onClick={() => scrollToSection(contactRef, 'contact')}
-                        className="inline-flex items-center text-white hover:text-sky-200 transition-colors duration-200"
-                      >
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <span>Contact Us</span>
-                      </button>
+            {/* Leadership Section */}
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-sky-100">
+                <h3 className="text-2xl font-light mb-8 text-slate-900 text-center">Leadership</h3>
+                <div className="text-center">
+                  <h4 className="text-xl font-light text-slate-900 mb-2">Yohannes Demssie</h4>
+                  <p className="text-sky-500 font-semibold mb-6">Executive Director</p>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center gap-3">
+                      <svg className="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773c.26.559.585 1.08.969 1.538A7 7 0 108.617 2.885a1 1 0 01-.956-.669l-.5-1.5A1 1 0 105.539 2H4a1 1 0 01-1-1z" />
+                      </svg>
+                      <a href="tel:503-713-2151" className="text-slate-600 hover:text-sky-500 font-light transition">503-713-2151</a>
                     </div>
-                  </div>
-                  <div className="md:col-span-2 p-8">
-                    <div className="prose prose-lg">
-                      <p className="text-slate-600 leading-relaxed mb-6">
-                        With over six years of dedicated experience in developmental disability services, Yohannes Demssie brings exceptional leadership and vision to Live Life Care Home. His commitment to creating a supportive and empowering environment has been instrumental in shaping our facility's success.
-                      </p>
-                      <p className="text-slate-600 leading-relaxed mb-6">
-                        Yohannes's expertise spans across behavioral support, medical care coordination, and mental health services. His person-centered approach ensures that each resident receives individualized attention and care that promotes their independence and well-being.
-                      </p>
-                      <p className="text-slate-600 leading-relaxed">
-                        Under his leadership, Live Life Care Home has developed comprehensive programs that focus on building independence, fostering personal growth, and enhancing the quality of life for all residents.
-                      </p>
+                    <div className="flex items-center justify-center gap-3">
+                      <svg className="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg>
+                      <a href="mailto:yohannesbante301@gmail.com" className="text-slate-600 hover:text-sky-500 font-light transition">yohannesbante301@gmail.com</a>
                     </div>
                   </div>
                 </div>
@@ -539,42 +572,219 @@ const MainPage = () => {
           </div>
         </section>
 
-        {/* Location Section */}
-        <section className="py-32 bg-slate-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Our Location</h2>
-            <div className="max-w-4xl mx-auto">
-              <p className="text-slate-600 text-lg mb-8">
-                Live Life Residential Care is located in Oregon's Clackamas county happy valley area, in a vibrant and accessible neighborhood. Our facility is just a five-minute walk from public transportation and Pioneer Park, with convenient access to Fred Meyer, Safeway, Costco, and the Clackamas Library.
+        {/* Locations Section */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-light mb-6 text-slate-900">
+                Our Homes
+              </h2>
+              <p className="text-lg text-slate-600 font-light">
+                Two beautiful, welcoming environments designed for comfort and community.
               </p>
-              <div className="mt-8 text-center">
-                <button 
-                  onClick={handleFacilityPhotoRequest}
-                  className="inline-block bg-sky-500 text-white py-3 px-8 hover:bg-sky-600 transition-colors duration-300 cursor-pointer"
+            </div>
+
+            {/* Location One Slideshow */}
+            <div className="mb-24">
+              <div className="relative mb-8 group">
+                <div className="rounded-3xl overflow-hidden border-4 border-sky-200 shadow-2xl bg-slate-100">
+                  <img 
+                    src={firstHomeImages[currentFirstIndex]} 
+                    alt="First Home" 
+                    className="w-full h-96 object-cover transition-opacity duration-500"
+                  />
+                </div>
+                
+                {/* Navigation Buttons */}
+                <button
+                  onClick={() => setCurrentFirstIndex((currentFirstIndex - 1 + firstHomeImages.length) % firstHomeImages.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100"
                 >
-                  Request Facility Photos
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                  </svg>
                 </button>
+                <button
+                  onClick={() => setCurrentFirstIndex((currentFirstIndex + 1) % firstHomeImages.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Image Counter */}
+                <div className="absolute bottom-4 right-4 bg-sky-500 text-white px-4 py-2 rounded-full text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {currentFirstIndex + 1} / {firstHomeImages.length}
+                </div>
+              </div>
+
+              <div className="max-w-2xl mx-auto">
+                <h3 className="text-4xl font-light mb-3 text-slate-900">Location One</h3>
+                <p className="text-2xl text-sky-500 font-semibold mb-6">14990 SE Pioneer Dr, Clackamas, OR</p>
+                <p className="text-lg text-slate-600 leading-relaxed mb-8 font-light">
+                  Our first home is located in a quiet and welcoming neighborhood in Clackamas. This location provides a comfortable and supportive environment designed to promote independence, safety, and community involvement.
+                </p>
+                <div className="rounded-2xl overflow-hidden shadow-md h-80 mb-8">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.123456789012!2d-122.54321!3d45.43210!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5495741234567890%3A0x1234567890abcdef!2s14990%20SE%20Pioneer%20Dr%2C%20Clackamas%2C%20OR!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Location One Map"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            {/* Location Two Slideshow */}
+            <div>
+              <div className="relative mb-8 group">
+                <div className="rounded-3xl overflow-hidden border-4 border-sky-200 shadow-2xl bg-slate-100">
+                  <img 
+                    src={secondHomeImages[currentSecondIndex]} 
+                    alt="Second Home" 
+                    className="w-full h-96 object-cover transition-opacity duration-500"
+                  />
+                </div>
+                
+                {/* Navigation Buttons */}
+                <button
+                  onClick={() => setCurrentSecondIndex((currentSecondIndex - 1 + secondHomeImages.length) % secondHomeImages.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setCurrentSecondIndex((currentSecondIndex + 1) % secondHomeImages.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-900 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Image Counter */}
+                <div className="absolute bottom-4 right-4 bg-sky-500 text-white px-4 py-2 rounded-full text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {currentSecondIndex + 1} / {secondHomeImages.length}
+                </div>
+              </div>
+
+              <div className="max-w-2xl mx-auto">
+                <h3 className="text-4xl font-light mb-3 text-slate-900">Location Two</h3>
+                <p className="text-2xl text-sky-500 font-semibold mb-6">15458 SE Pioneer Dr, Clackamas, OR 97015</p>
+                <p className="text-lg text-slate-600 leading-relaxed mb-6 font-light">
+                  Our second home is a spacious and well-maintained 3-bedroom, 2.5-bathroom residence in a peaceful residential area.
+                </p>
+                <div className="bg-slate-50 rounded-2xl p-8 mb-8">
+                  <p className="text-slate-600 text-lg leading-relaxed font-light mb-6">
+                    Ideally located near many community resources and amenities:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-start">
+                      <svg className="w-6 h-6 text-sky-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-slate-600">Pioneer Park – walking distance</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-6 h-6 text-sky-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-slate-600">Clackamas Town Center</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-6 h-6 text-sky-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-slate-600">Clackamas Community College</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-6 h-6 text-sky-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-slate-600">Rock Creek hiking trails</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-md h-80">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.123456789012!2d-122.54321!3d45.43210!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5495741234567890%3A0x1234567890abcdef!2s15458%20SE%20Pioneer%20Dr%2C%20Clackamas%2C%20OR%2097015!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Location Two Map"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
+            {/* Our Environment */}
+            <div className="mt-24 bg-sky-50 rounded-3xl p-12 md:p-16">
+              <h3 className="text-4xl font-light text-center mb-12 text-slate-900">Our Environment</h3>
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="flex items-start">
+                  <svg className="w-8 h-8 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-slate-900 mb-1">Safe & Structured</p>
+                    <p className="text-slate-600">A secure, welcoming living environment</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-8 h-8 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-slate-900 mb-1">Independence & Choice</p>
+                    <p className="text-slate-600">Opportunities for personal growth</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-8 h-8 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-slate-900 mb-1">Community Access</p>
+                    <p className="text-slate-600">Connection to activities and resources</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <svg className="w-8 h-8 text-sky-500 mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-slate-900 mb-1">Comfort & Dignity</p>
+                    <p className="text-slate-600">Respectful, home-like spaces</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Gallery Section */}
-        <section ref={galleryRef} className="bg-slate-50">
-          <Gallery />
-        </section>
-
         {/* Programs Section */}
-        <section ref={programsRef} className="py-32 bg-sky-50">
+        <section ref={programsRef} className="py-24 bg-sky-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-4xl font-light text-center mb-16 tracking-wide">
-              <span className="text-sky-500">Programs</span> and Activities
-            </h2>
-            <div className="max-w-7xl mx-auto">
-              <p className="text-slate-600 text-lg text-center mb-12 max-w-4xl mx-auto">
-                We are committed to creating a supportive, person-centered environment where individuals can grow, achieve their goals, and engage meaningfully with their community. Our programs are thoughtfully tailored to reflect the unique preferences, abilities, and strengths of each resident.
+            <div className="max-w-3xl mx-auto text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-light mb-6 text-slate-900">
+                Programs & Activities
+              </h2>
+              <p className="text-lg text-slate-600 font-light">
+                Personalized programs designed to support growth, independence, and community engagement.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 {programs.map((program, index) => (
                   <ProgramCard
                     key={index}
@@ -583,17 +793,19 @@ const MainPage = () => {
                   />
                 ))}
               </div>
-              <p className="text-slate-600 text-sm text-center mt-12 max-w-3xl mx-auto italic">
-                All programs and supports are personalized according to each individual's unique needs and guided by their ISP (Individual Support Plan) goals—ensuring meaningful progress and a fulfilling quality of life.
-              </p>
             </div>
           </div>
         </section>
 
         {/* Contact Us Section */}
-        <section ref={contactRef} id="contact" className="py-32 bg-sky-50">
+        <section ref={contactRef} id="contact" className="py-24 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
+            <div className="max-w-2xl mx-auto text-center mb-16">
+              <h2 className="text-5xl md:text-6xl font-light mb-6 text-slate-900">Get in Touch</h2>
+              <p className="text-lg text-slate-600 font-light">
+                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              </p>
+            </div>
             <div className="max-w-lg mx-auto">
               <ContactForm />
             </div>
@@ -601,22 +813,95 @@ const MainPage = () => {
         </section>
 
         {/* Mission Section */}
-        <section ref={missionRef} className="py-32 bg-slate-50 border-t border-slate-100">
+        <section ref={missionRef} className="py-24 bg-slate-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-semibold text-center mb-16 text-slate-900">Our Mission</h2>
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                At Live Life Care Home, our mission is to provide exceptional, person-centered care that empowers individuals with intellectual and developmental disabilities to live their fullest lives. We believe in creating a nurturing environment where every resident can thrive, grow, and maintain their independence.
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-5xl md:text-6xl font-light text-center mb-12 text-slate-900">Our Mission</h2>
+              <p className="text-slate-600 text-xl leading-relaxed mb-8 text-center font-light">
+                At Live Life Care Home, our mission is to provide exceptional, person-centered care that empowers individuals with intellectual and developmental disabilities to live their fullest lives.
               </p>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
-                We are committed to delivering comprehensive support services that address the unique needs of each resident, fostering their personal growth, and enhancing their quality of life. Our dedicated team works tirelessly to ensure that every individual receives the highest standard of care while maintaining their dignity and autonomy.
-              </p>
-              <p className="text-slate-600 text-lg leading-relaxed">
-                Through our holistic approach to care, professional staff training, and continuous improvement of our services, we strive to be a leading provider of residential care services in Oregon. We measure our success by the wellbeing, happiness, and achievements of our residents.
-              </p>
+              <div className="grid md:grid-cols-3 gap-8 mt-12">
+                <div className="text-center">
+                  <div className="inline-block p-4 bg-sky-100 rounded-2xl mb-4">
+                    <svg className="w-8 h-8 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-3">Compassionate Care</h3>
+                  <p className="text-slate-600 font-light">Delivering support with dignity and deep respect for each individual.</p>
+                </div>
+                <div className="text-center">
+                  <div className="inline-block p-4 bg-sky-100 rounded-2xl mb-4">
+                    <svg className="w-8 h-8 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-3">Personal Growth</h3>
+                  <p className="text-slate-600 font-light">Fostering independence and meaningful achievements for every resident.</p>
+                </div>
+                <div className="text-center">
+                  <div className="inline-block p-4 bg-sky-100 rounded-2xl mb-4">
+                    <svg className="w-8 h-8 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-3">Quality of Life</h3>
+                  <p className="text-slate-600 font-light">Creating safe, nurturing environments where residents thrive.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="bg-slate-900 text-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-12 mb-12">
+                <div>
+                  <h3 className="text-2xl font-light mb-4">Live Life</h3>
+                  <p className="text-slate-400 font-light">Compassionate adult care serving our community with excellence and dignity.</p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+                  <div className="space-y-3">
+                    <button 
+                      onClick={() => scrollToSection(contactRef, 'contact')}
+                      className="block text-slate-300 hover:text-sky-400 transition-colors duration-300 font-light"
+                    >
+                      Get in Touch
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection(servicesRef, 'services')}
+                      className="block text-slate-300 hover:text-sky-400 transition-colors duration-300 font-light"
+                    >
+                      Our Services
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection(aboutRef, 'about')}
+                      className="block text-slate-300 hover:text-sky-400 transition-colors duration-300 font-light"
+                    >
+                      About Us
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+                  <p className="text-slate-300 text-sm font-light leading-relaxed">
+                    14990 SE Pioneer Dr<br />
+                    Clackamas, OR 97015<br />
+                    <br />
+                    15458 SE Pioneer Dr<br />
+                    Clackamas, OR 97015
+                  </p>
+                </div>
+              </div>
+              <div className="border-t border-slate-800 pt-8 text-center text-slate-400 text-sm font-light">
+                <p>© 2026 Live Life Adult Care Home. All rights reserved.</p>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
