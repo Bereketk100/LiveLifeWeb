@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
 import ProgramCard from './ProgramCard';
 
@@ -47,18 +46,6 @@ const MainPage = () => {
   const scrollToSection = (ref, tabName) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
     setActiveTab(tabName);
-  };
-
-  const handleFacilityPhotoRequest = () => {
-    scrollToSection(contactRef, 'contact');
-    setTimeout(() => {
-      const messageInput = document.querySelector('#message');
-      const messageEvent = new Event('input', { bubbles: true });
-      if (messageInput) {
-        messageInput.value = "Hi, I would like to request photos of your facility. Please send them to my email. Thank you!";
-        messageInput.dispatchEvent(messageEvent);
-      }
-    }, 100);
   };
 
   const services = [
